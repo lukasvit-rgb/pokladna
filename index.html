@@ -289,7 +289,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD60m7hSErvSuOQul3kfAjWPpGfVmyVVuM",
@@ -303,12 +303,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const q = query(collection(db, "pokladna"), orderBy("ts", "desc"));
+const q = query(collection(db, "pokladna"), orderBy("ts", "desc"), limit(2000));
 onSnapshot(q, (snapshot) => {
   const data = [];
   snapshot.forEach(d => data.push({...d.data(), _id: d.id}));
   window._txData = data;
-  localStorage.setItem('pk_hist', JSON.stringify(data));
+  try {
+    localStorage.setItem('pk_hist', JSON.stringify(data));
+  } catch(e) { console.error('localStorage save failed:', e); }
   refreshAll();
 });
 
