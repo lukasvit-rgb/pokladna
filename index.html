@@ -19,6 +19,14 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:90px;touch-action:manipulation}
 
+/* LOGIN SCREEN */
+.login-ov{display:none;position:fixed;inset:0;background:#0a0a0a;z-index:400;align-items:center;justify-content:center;padding:20px}
+.login-ov.open{display:flex}
+.login-box{background:#ffffff;border-radius:16px;width:100%;max-width:340px;padding:26px 22px}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;letter-spacing:5px;text-transform:uppercase;text-align:center;margin-bottom:2px}
+.login-sub{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:22px}
+.login-err{color:var(--red);font-size:12px;margin:-6px 0 14px;display:none}
+
 /* HEADER */
 .header{height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--border);padding:0 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;flex-direction:column;line-height:1}
@@ -26,19 +34,25 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 .logo-bot{display:flex;gap:14px}
 .logo-sep{height:1px;background:rgba(255,255,255,.12);margin:2px 0}
 .hdate{text-align:right;font-size:11px;color:var(--dim);line-height:1.6}
+.who-chip{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:5px 10px 5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;color:var(--white)}
+.who-chip span.ico{color:var(--dim);font-size:13px}
 
 /* BALANCE CARDS */
-.balance-wrap{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.balance-wrap{padding:12px;display:grid;grid-template-columns:1fr;gap:8px}
 .bcard{border-radius:12px;padding:14px;border:1px solid}
 .bcard.official{background:var(--official-bg);border-color:var(--official-dim)}
 .bcard.unofficial{background:var(--unofficial-bg);border-color:var(--unofficial-dim)}
 .bcard-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
 .bcard.official .bcard-lbl{color:var(--official)}
 .bcard.unofficial .bcard-lbl{color:var(--unofficial)}
-.bcard-amt{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1}
+.bcard-amt{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;line-height:1}
 .bcard.official .bcard-amt{color:var(--official)}
 .bcard.unofficial .bcard-amt{color:var(--unofficial)}
-.bcard-sub{font-size:10px;color:var(--dim);margin-top:4px}
+.bcard-sub{font-size:11px;color:var(--dim);margin-top:5px}
+
+/* NEOFICIALNI STRIP */
+.unof-strip{margin:0 12px 10px;background:var(--unofficial-bg);border:1px solid var(--unofficial-dim);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.unof-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--unofficial)}
 
 /* TODAY STRIP */
 .today-strip{margin:0 12px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
@@ -55,7 +69,8 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 
 /* TRANSACTION LIST */
 .txlist{padding:0 12px;display:flex;flex-direction:column;gap:6px}
-.txitem{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:10px}
+.txitem{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.txitem:active{background:var(--bg3)}
 .txitem-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .txitem-icon.income{background:#d4edda}
 .txitem-icon.expense{background:#fde8e8}
@@ -94,6 +109,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 .finp::-webkit-outer-spin-button,.finp::-webkit-inner-spin-button{-webkit-appearance:none}
 .finp:focus{border-color:var(--white)}
 .finp::placeholder{color:var(--muted)}
+.fstatic{padding:11px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-align:center}
 
 .seg{display:flex;gap:6px}
 .seg-btn{flex:1;padding:11px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);cursor:pointer;text-align:center;transition:all .12s}
@@ -110,6 +126,8 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 .bok{width:100%;padding:15px;background:#111111;color:#ffffff;border:none;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:4px}
 .bok:active{opacity:.85}
 .bok:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.bdel{width:100%;padding:15px;background:#2a1414;color:var(--red);border:1px solid #4a2a2a;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:8px}
+.bdel:active{opacity:.85}
 
 /* STATS SCREEN */
 .screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;overflow-y:auto;padding-bottom:90px}
@@ -142,7 +160,8 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 
 /* HISTORY SCREEN */
 .hlist{display:flex;flex-direction:column;gap:7px;padding:10px 12px}
-.hitem{background:#ffffff;border-radius:8px;padding:11px 13px;border-left:3px solid var(--border)}
+.hitem{background:#ffffff;border-radius:8px;padding:11px 13px;border-left:3px solid var(--border);cursor:pointer}
+.hitem:active{background:var(--bg3)}
 .hitem.income{border-left-color:var(--green)}
 .hitem.expense{border-left-color:var(--red)}
 .hhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -152,12 +171,29 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 .hamt.minus{color:var(--red)}
 .hdet2{font-size:11px;color:var(--dim);line-height:1.6}
 .hnote2{font-size:11px;color:var(--dim);font-style:italic;margin-top:3px}
-.hact{display:flex;gap:6px;margin-top:8px}
-.hbtn{flex:1;padding:7px;border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
-.hbtn-del{background:#2a1a1a;color:var(--red);border:1px solid #4a2a2a}
 </style>
 </head>
 <body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-ov open" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">POKLADNA</div>
+    <div class="login-sub">Palety Vít</div>
+    <div class="fgrp">
+      <label class="flbl">E-mail</label>
+      <input class="finp" type="email" id="login-email" placeholder="e-mail" autocomplete="username">
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Heslo</label>
+      <input class="finp" type="password" id="login-pass" placeholder="heslo" autocomplete="current-password">
+    </div>
+    <div class="login-err" id="login-err"></div>
+    <button class="bok" onclick="submitLogin()">Přihlásit se</button>
+  </div>
+</div>
+
+<div id="app-root" style="display:none">
 
 <div class="header">
   <div style="display:flex;align-items:center;gap:14px">
@@ -168,24 +204,31 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
     <div style="width:1px;height:32px;background:var(--border)"></div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--dim)">POKLADNA</div>
   </div>
-  <div class="hdate" id="hdate"></div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+    <div class="who-chip" id="who-chip" onclick="confirmLogout()"><span id="who-name">—</span><span class="ico">⏻</span></div>
+    <div class="hdate" id="hdate"></div>
+  </div>
 </div>
 
 <div class="balance-wrap">
-  <div class="bcard" style="grid-column:1/-1;background:#e8f5ec;border-color:#a8d8b0">
-    <div class="bcard-lbl" style="color:var(--green)">Celkový zůstatek</div>
-    <div class="bcard-amt" id="bal-total" style="color:var(--green)">0 Kč</div>
-    <div class="bcard-sub">příjmy − výdaje</div>
+  <div class="bcard official" style="background:#e8f5ec;border-color:#a8d8b0">
+    <div class="bcard-lbl" style="color:var(--green)">Zůstatek</div>
+    <div class="bcard-amt" id="bal-total" style="color:var(--green)">—</div>
+    <div class="bcard-sub" id="bal-total-sub">načítám…</div>
   </div>
-  <div class="bcard official">
-    <div class="bcard-lbl">Příjmy ofiko</div>
-    <div class="bcard-amt" id="bal-official">0 Kč</div>
-    <div class="bcard-sub" id="bal-official-sub">utraceno z ofiko</div>
-  </div>
-  <div class="bcard unofficial">
-    <div class="bcard-lbl">Příjmy neofiko</div>
-    <div class="bcard-amt" id="bal-unofficial">0 Kč</div>
-    <div class="bcard-sub" id="bal-unofficial-sub">utraceno z neofiko</div>
+</div>
+
+<div class="unof-strip">
+  <div class="unof-lbl">Neoficiální od ukotvení</div>
+  <div class="today-vals">
+    <div class="today-item">
+      <div class="today-item-lbl">Příjmy</div>
+      <div class="today-item-val plus" id="unof-in">—</div>
+    </div>
+    <div class="today-item">
+      <div class="today-item-lbl">Výdaje</div>
+      <div class="today-item-val minus" id="unof-out">—</div>
+    </div>
   </div>
 </div>
 
@@ -235,10 +278,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 
     <div class="fgrp">
       <label class="flbl">Kdo</label>
-      <div class="seg">
-        <button class="seg-btn on-person" id="per-lukas" onclick="setPerson('Lukáš')">Lukáš</button>
-        <button class="seg-btn" id="per-kolega" onclick="setPerson('Ondra')">Ondra</button>
-      </div>
+      <div class="fstatic" id="add-who-display">—</div>
     </div>
 
     <div class="fgrp">
@@ -257,6 +297,60 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
     </div>
 
     <button class="bok" id="bok-add" onclick="saveTx()" disabled>✓ Uložit transakci</button>
+  </div>
+</div>
+
+<!-- EDIT / DETAIL MODAL -->
+<div class="ov" id="ov-edit">
+  <div class="modal">
+    <div class="mhd"><div class="mtit">Detail transakce</div><button class="mclose" onclick="closeOv('ov-edit')">✕</button></div>
+
+    <div class="fgrp">
+      <label class="flbl">Datum a čas</label>
+      <div class="fstatic" id="edit-datetime" style="color:var(--dim)">—</div>
+    </div>
+
+    <div class="fgrp">
+      <label class="flbl">Typ</label>
+      <div class="seg">
+        <button class="seg-btn on-income" id="etyp-income" onclick="setETyp('income')">↑ Příjem</button>
+        <button class="seg-btn" id="etyp-expense" onclick="setETyp('expense')">↓ Výdaj</button>
+      </div>
+    </div>
+
+    <div class="fgrp">
+      <label class="flbl">Kasa</label>
+      <div class="seg">
+        <button class="seg-btn on-official" id="ekas-official" onclick="setEKasa('official')">🔵 Oficiální</button>
+        <button class="seg-btn" id="ekas-unofficial" onclick="setEKasa('unofficial')">🔴 Neoficiální</button>
+      </div>
+    </div>
+
+    <div class="fgrp">
+      <label class="flbl">Kdo</label>
+      <div class="seg">
+        <button class="seg-btn on-person" id="eper-lukas" onclick="setEPerson('Lukáš')">Lukáš</button>
+        <button class="seg-btn" id="eper-kolega" onclick="setEPerson('Ondra')">Ondra</button>
+      </div>
+    </div>
+
+    <div class="fgrp">
+      <label class="flbl">Kategorie</label>
+      <div class="cats" id="ecats"></div>
+    </div>
+
+    <div class="fgrp">
+      <label class="flbl">Částka (Kč)</label>
+      <input class="finp" type="number" id="einp-amt" inputmode="numeric" min="0" oninput="validateEditForm()">
+    </div>
+
+    <div class="fgrp">
+      <label class="flbl">Poznámka</label>
+      <input class="finp" type="text" id="einp-note" maxlength="120">
+    </div>
+
+    <button class="bok" id="bok-edit" onclick="saveEditTx()">✓ Uložit změny</button>
+    <button class="bdel" onclick="deleteEditTx()">🗑️ Smazat transakci</button>
   </div>
 </div>
 
@@ -285,11 +379,14 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
   <div class="catlist" id="catlist"></div>
 </div>
 
+</div><!-- /app-root -->
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD60m7hSErvSuOQul3kfAjWPpGfVmyVVuM",
@@ -302,21 +399,23 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-const q = query(collection(db, "pokladna"), orderBy("ts", "desc"), limit(2000));
-onSnapshot(q, (snapshot) => {
-  const data = [];
-  snapshot.forEach(d => data.push({...d.data(), _id: d.id}));
-  window._txData = data;
-  try {
-    localStorage.setItem('pk_hist', JSON.stringify(data));
-  } catch(e) { console.error('localStorage save failed:', e); }
-  refreshAll();
-});
+const PERSON_BY_EMAIL = {
+  'lukas.vit@v-pallets.cz': 'Lukáš',
+  'ondrej.vit@paletyvit.cz': 'Ondra'
+};
 
 window.saveToFirebase = async function(rec) {
   try {
     await addDoc(collection(db, "pokladna"), rec);
+    return true;
+  } catch(e) { console.error(e); return false; }
+};
+
+window.updateInFirebase = async function(id, fields) {
+  try {
+    await updateDoc(doc(db, "pokladna", id), fields);
     return true;
   } catch(e) { console.error(e); return false; }
 };
@@ -327,20 +426,94 @@ window.deleteFromFirebase = async function(id) {
     return true;
   } catch(e) { console.error(e); return false; }
 };
+
+window.loadAnchor = async function() {
+  try {
+    const snap = await getDoc(doc(db, 'pokladna_meta', 'anchor'));
+    if (snap.exists()) {
+      const data = snap.data();
+      window._anchor = { date: data.date, official: Number(data.official) };
+    } else {
+      window._anchor = null;
+    }
+  } catch(e) { console.error('anchor fetch failed', e); window._anchor = null; }
+  if (window.refreshAll) window.refreshAll();
+};
+
+let unsubscribeTx = null;
+
+window.doLogin = async function(email, password) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    return null;
+  } catch(e) {
+    return e.code || 'auth-error';
+  }
+};
+
+window.doLogout = function() {
+  if (unsubscribeTx) { unsubscribeTx(); unsubscribeTx = null; }
+  signOut(auth);
+};
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window._currentPerson = PERSON_BY_EMAIL[user.email] || user.email;
+    document.getElementById('login-screen').classList.remove('open');
+    document.getElementById('app-root').style.display = '';
+    const whoName = document.getElementById('who-name');
+    if (whoName) whoName.textContent = window._currentPerson;
+    window.loadAnchor();
+    if (!unsubscribeTx) {
+      const q = query(collection(db, "pokladna"), orderBy("ts", "desc"), limit(2000));
+      unsubscribeTx = onSnapshot(q, (snapshot) => {
+        const data = [];
+        snapshot.forEach(d => data.push({...d.data(), _id: d.id}));
+        window._txData = data;
+        try { localStorage.setItem('pk_hist', JSON.stringify(data)); } catch(e) { console.error('localStorage save failed:', e); }
+        if (window.refreshAll) window.refreshAll();
+      });
+    }
+  } else {
+    window._currentPerson = null;
+    window._txData = null;
+    document.getElementById('login-screen').classList.add('open');
+    document.getElementById('app-root').style.display = 'none';
+  }
+});
+
+window.submitLogin = async function() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-err');
+  errEl.style.display = 'none';
+  if (!email || !pass) return;
+  const err = await window.doLogin(email, pass);
+  if (err) {
+    errEl.textContent = 'Přihlášení se nepovedlo. Zkontroluj e-mail a heslo.';
+    errEl.style.display = 'block';
+  }
+};
+
+window.confirmLogout = function() {
+  if (confirm('Odhlásit se z appky?')) window.doLogout();
+};
 </script>
 
 <script>
 const CATS_EXPENSE = ['Výkup palet','Mzda','Záloha na mzdu','Doprava','Nafta','Materiál','Jiný výdaj'];
 const CATS_INCOME  = ['Vklad','Maloprodej','Platba FA cash','Jiný příjem'];
+const SHEET_WRITE_URL = 'https://script.google.com/macros/s/AKfycbwkS6muxUuJXqvub_QR2NxXjy361AZuLNrVAWzIXhK4-1531aV_cQ5O121h-_PgjHOv8Q/exec';
 
 const fd = d => (d?new Date(d):new Date()).toLocaleDateString('cs-CZ',{day:'2-digit',month:'2-digit',year:'numeric'});
 const ft = d => (d?new Date(d):new Date()).toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
-const fkc = n => n.toLocaleString('cs-CZ') + ' Kč';
+const fkc = n => Math.round(n).toLocaleString('cs-CZ') + ' Kč';
 
 const ck = () => document.getElementById('hdate').innerHTML = `<div>${fd()}</div><div>${ft()}</div>`;
 ck(); setInterval(ck, 30000);
 
-let formTyp = 'income', formKasa = 'official', formPerson = 'Lukáš', formCat = '';
+let formTyp = 'income', formKasa = 'official', formCat = '';
+let editTyp = 'income', editKasa = 'official', editPerson = 'Lukáš', editCat = '', editTx = null;
 
 function gh() {
   if (window._txData) return window._txData;
@@ -354,34 +527,37 @@ function refreshAll() {
   if (document.getElementById('screen-stats').classList.contains('open')) renderStats();
   if (document.getElementById('screen-history').classList.contains('open')) renderHistory();
 }
+window.refreshAll = refreshAll;
 
 function renderBalances() {
   const h = gh();
-  let offInc = 0, unoffInc = 0, offExp = 0, unoffExp = 0;
+  const anchor = window._anchor;
+  const bt = document.getElementById('bal-total');
+  const bts = document.getElementById('bal-total-sub');
+  const ui = document.getElementById('unof-in');
+  const uo = document.getElementById('unof-out');
+  if (!anchor) {
+    if (bt) { bt.textContent = 'Čeká na ukotvení'; bt.style.fontSize = '20px'; }
+    if (bts) bts.textContent = 'zůstatek zatím není ukotvený k reálnému stavu kasy';
+    if (ui) ui.textContent = '—';
+    if (uo) uo.textContent = '—';
+    return;
+  }
+  let offBal = anchor.official;
+  let unoffIn = 0, unoffOut = 0;
   h.forEach(t => {
-    if (t.typ === 'income') {
-      if (t.kasa === 'unofficial') unoffInc += t.amt;
-      else offInc += t.amt;
+    if (!t.ts || t.ts < anchor.date || t.amt === '' || t.amt === undefined) return;
+    const amt = Number(t.amt) || 0;
+    if (t.kasa === 'unofficial') {
+      if (t.typ === 'income') unoffIn += amt; else unoffOut += amt;
     } else {
-      if (t.kasa === 'unofficial') unoffExp += t.amt;
-      else offExp += t.amt;
+      if (t.typ === 'income') offBal += amt; else offBal -= amt;
     }
   });
-  const totalInc = offInc + unoffInc;
-  const totalExp = offExp + unoffExp;
-
-  // Update balance cards
-  const bo = document.getElementById('bal-official');
-  const bu = document.getElementById('bal-unofficial');
-  const bt = document.getElementById('bal-total');
-  const bos = document.getElementById('bal-official-sub');
-  const bus = document.getElementById('bal-unofficial-sub');
-
-  if (bo) { bo.textContent = fkc(offInc); bo.style.color = 'var(--official)'; }
-  if (bu) { bu.textContent = fkc(unoffInc); bu.style.color = 'var(--unoffi' + 'cial)'; }
-  if (bos) bos.textContent = `výdaje: ${fkc(offExp)}`;
-  if (bus) bus.textContent = `výdaje: ${fkc(unoffExp)}`;
-  if (bt) { bt.textContent = fkc(totalInc - totalExp); bt.style.color = (totalInc-totalExp)>=0?'var(--green)':'var(--red)'; }
+  if (bt) { bt.textContent = fkc(offBal); bt.style.fontSize = '34px'; bt.style.color = offBal>=0?'var(--green)':'var(--red)'; }
+  if (bts) bts.textContent = 'oficiální kasa · od ' + fd(new Date(anchor.date));
+  if (ui) ui.textContent = '+' + fkc(unoffIn);
+  if (uo) uo.textContent = '−' + fkc(unoffOut);
 }
 
 function renderToday() {
@@ -395,20 +571,21 @@ function renderToday() {
 }
 
 function renderRecent() {
-  const h = gh().slice(0, 10);
+  const full = gh();
+  const h = full.slice(0, 10);
   const el = document.getElementById('txlist');
   if (h.length === 0) { el.innerHTML = '<div class="empty">Žádné transakce zatím.</div>'; return; }
-  el.innerHTML = h.map(t => txHTML(t)).join('');
+  el.innerHTML = h.map((t,i) => txHTML(t, i)).join('');
 }
 
-function txHTML(t) {
+function txHTML(t, idx) {
   const icon = t.typ === 'income' ? '↑' : '↓';
   const iconCls = t.typ === 'income' ? 'income' : 'expense';
   const amtCls = t.typ === 'income' ? 'plus' : 'minus';
   const sign = t.typ === 'income' ? '+' : '−';
   const kasaCls = t.kasa === 'official' ? 'official' : 'unofficial';
   const kasaLbl = t.kasa === 'official' ? 'OFICIÁLNÍ' : 'NEOFICIÁLNÍ';
-  return `<div class="txitem">
+  return `<div class="txitem" onclick="openEditByIndex(${idx})">
     <div class="txitem-icon ${iconCls}">${icon}</div>
     <div class="txitem-info">
       <div class="txitem-cat">${t.cat}</div>
@@ -421,12 +598,11 @@ function txHTML(t) {
   </div>`;
 }
 
-// FORM
+// ADD FORM
 function setTyp(v) {
   formTyp = v; formCat = '';
   document.getElementById('typ-income').className = 'seg-btn' + (v==='income'?' on-income':'');
   document.getElementById('typ-expense').className = 'seg-btn' + (v==='expense'?' on-expense':'');
-  // Kasa je vždy viditelná — pro příjmy i výdaje
   document.getElementById('fgrp-kasa').style.display = '';
   formKasa = 'official';
   document.getElementById('kas-official').className='seg-btn on-official';
@@ -441,15 +617,9 @@ function setKasa(v) {
   document.getElementById('kas-unofficial').className = 'seg-btn' + (v==='unofficial'?' on-unofficial':'');
 }
 
-function setPerson(v) {
-  formPerson = v;
-  document.getElementById('per-lukas').className = 'seg-btn' + (v==='Lukáš'?' on-person':'');
-  document.getElementById('per-kolega').className = 'seg-btn' + (v==='Ondra'?' on-person':'');
-}
-
 function setCat(v) {
   formCat = v;
-  document.querySelectorAll('.cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
+  document.querySelectorAll('#cats .cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
   validateForm();
 }
 
@@ -466,15 +636,13 @@ function validateForm() {
 }
 
 function openAdd() {
-  formTyp='income'; formKasa='official'; formPerson='Lukáš'; formCat='';
+  formTyp='income'; formKasa='official'; formCat='';
   document.getElementById('typ-income').className='seg-btn on-income';
   document.getElementById('typ-expense').className='seg-btn';
   document.getElementById('kas-official').className='seg-btn on-official';
   document.getElementById('fgrp-kasa').style.display='';
-  formKasa='official';
   document.getElementById('kas-unofficial').className='seg-btn';
-  document.getElementById('per-lukas').className='seg-btn on-person';
-  document.getElementById('per-kolega').className='seg-btn';
+  document.getElementById('add-who-display').textContent = window._currentPerson || '—';
   document.getElementById('finp-amt').value='';
   document.getElementById('finp-note').value='';
   document.getElementById('bok-add').disabled=true;
@@ -487,23 +655,103 @@ async function saveTx() {
   const note = (document.getElementById('finp-note').value||'').trim();
   if (!formCat || !amt) return;
   const now = new Date();
-  const rec = {ts:now.toISOString(), date:fd(now), time:ft(now), typ:formTyp, kasa:formKasa, person:formPerson, cat:formCat, amt, note};
+  const rec = {ts:now.toISOString(), date:fd(now), time:ft(now), typ:formTyp, kasa:formKasa, person:window._currentPerson || 'Neznámý', cat:formCat, amt, note};
   document.getElementById('bok-add').disabled = true;
   if (window.saveToFirebase) await window.saveToFirebase(rec);
   else {
     const h = gh(); h.unshift(rec); localStorage.setItem('pk_hist', JSON.stringify(h.slice(0,500)));
     refreshAll();
   }
-  // Zápis do Google Sheets
   const encoded = encodeURIComponent(JSON.stringify(rec));
   const img = new Image();
-  img.src = 'https://script.google.com/macros/s/AKfycbwkS6muxUuJXqvub_QR2NxXjy361AZuLNrVAWzIXhK4-1531aV_cQ5O121h-_PgjHOv8Q/exec?data=' + encoded;
+  img.src = SHEET_WRITE_URL + '?data=' + encoded;
   closeOv('ov-add');
   toast('✓ Transakce uložena');
 }
 
 function closeOv(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.ov').forEach(el => el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); }));
+
+// EDIT / DETAIL FORM
+function openEditByIndex(i) {
+  const h = gh();
+  if (h[i]) openEdit(h[i]);
+}
+
+function openEdit(tx) {
+  editTx = tx;
+  editTyp = tx.typ; editKasa = tx.kasa || 'official'; editPerson = tx.person; editCat = tx.cat;
+  document.getElementById('edit-datetime').textContent = tx.date + ' ' + tx.time;
+  document.getElementById('etyp-income').className = 'seg-btn' + (editTyp==='income'?' on-income':'');
+  document.getElementById('etyp-expense').className = 'seg-btn' + (editTyp==='expense'?' on-expense':'');
+  document.getElementById('ekas-official').className = 'seg-btn' + (editKasa==='official'?' on-official':'');
+  document.getElementById('ekas-unofficial').className = 'seg-btn' + (editKasa==='unofficial'?' on-unofficial':'');
+  document.getElementById('eper-lukas').className = 'seg-btn' + (editPerson==='Lukáš'?' on-person':'');
+  document.getElementById('eper-kolega').className = 'seg-btn' + (editPerson==='Ondra'?' on-person':'');
+  document.getElementById('einp-amt').value = tx.amt;
+  document.getElementById('einp-note').value = tx.note || '';
+  renderECats();
+  document.getElementById('ov-edit').classList.add('open');
+}
+
+function setETyp(v) {
+  editTyp = v; editCat = '';
+  document.getElementById('etyp-income').className = 'seg-btn' + (v==='income'?' on-income':'');
+  document.getElementById('etyp-expense').className = 'seg-btn' + (v==='expense'?' on-expense':'');
+  renderECats();
+}
+
+function setEKasa(v) {
+  editKasa = v;
+  document.getElementById('ekas-official').className = 'seg-btn' + (v==='official'?' on-official':'');
+  document.getElementById('ekas-unofficial').className = 'seg-btn' + (v==='unofficial'?' on-unofficial':'');
+}
+
+function setEPerson(v) {
+  editPerson = v;
+  document.getElementById('eper-lukas').className = 'seg-btn' + (v==='Lukáš'?' on-person':'');
+  document.getElementById('eper-kolega').className = 'seg-btn' + (v==='Ondra'?' on-person':'');
+}
+
+function setECat(v) {
+  editCat = v;
+  document.querySelectorAll('#ecats .cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
+}
+
+function renderECats() {
+  const cats = editTyp === 'income' ? CATS_INCOME : CATS_EXPENSE;
+  document.getElementById('ecats').innerHTML = cats.map(c =>
+    `<button class="cat-btn${editCat===c?' on':''}" data-cat="${c}" onclick="setECat('${c}')">${c}</button>`
+  ).join('');
+}
+
+function validateEditForm() {
+  // ponecháno pro budoucí použití (zatím se tlačítko nezakazuje, aby šlo uložit i beze změny částky)
+}
+
+async function saveEditTx() {
+  const amt = parseFloat(document.getElementById('einp-amt').value);
+  const note = (document.getElementById('einp-note').value||'').trim();
+  if (!editCat || !amt || !editTx) return;
+  const updated = { typ: editTyp, kasa: editKasa, person: editPerson, cat: editCat, amt, note };
+  if (editTx._id && window.updateInFirebase) await window.updateInFirebase(editTx._id, updated);
+  const sheetPayload = Object.assign({}, updated, {date: editTx.date, time: editTx.time});
+  const encoded = encodeURIComponent(JSON.stringify(sheetPayload));
+  const img = new Image();
+  img.src = SHEET_WRITE_URL + '?action=update&ts=' + encodeURIComponent(editTx.ts) + '&data=' + encoded;
+  closeOv('ov-edit');
+  toast('✓ Transakce upravena');
+}
+
+async function deleteEditTx() {
+  if (!editTx) return;
+  if (!confirm('Smazat tuto transakci?')) return;
+  if (editTx._id && window.deleteFromFirebase) await window.deleteFromFirebase(editTx._id);
+  const img = new Image();
+  img.src = SHEET_WRITE_URL + '?action=delete&ts=' + encodeURIComponent(editTx.ts);
+  closeOv('ov-edit');
+  toast('🗑️ Transakce smazána');
+}
 
 function openHistory() { renderHistory(); document.getElementById('screen-history').classList.add('open'); }
 function closeScreen(id) { document.getElementById(id).classList.remove('open'); }
@@ -517,30 +765,15 @@ function renderHistory() {
     const sign = t.typ==='income'?'+':'−';
     const kasaCls = t.kasa==='official'?'official':'unofficial';
     const kasaLbl = t.kasa==='official'?'OFICIÁLNÍ':'NEOFICIÁLNÍ';
-    return `<div class="hitem ${t.typ}">
+    return `<div class="hitem ${t.typ}" onclick="openEditByIndex(${i})">
       <div class="hhd">
         <div class="hdate2">${t.date} ${t.time} · ${t.person}</div>
         <div class="hamt ${amtCls}">${sign}${fkc(t.amt)}</div>
       </div>
       <div class="hdet2">${t.cat} · <span class="txitem-kasa ${kasaCls}">${kasaLbl}</span></div>
       ${t.note?`<div class="hnote2">${t.note}</div>`:''}
-      <div class="hact"><button class="hbtn hbtn-del" onclick="deleteTx(${i})">🗑️ Smazat</button></div>
     </div>`;
   }).join('');
-}
-
-async function deleteTx(i) {
-  if (!confirm('Smazat tuto transakci?')) return;
-  const h = gh();
-  const t = h[i];
-  if (t._id && window.deleteFromFirebase) {
-    await window.deleteFromFirebase(t._id);
-  } else {
-    h.splice(i,1);
-    localStorage.setItem('pk_hist', JSON.stringify(h));
-    refreshAll();
-  }
-  toast('🗑️ Transakce smazána');
 }
 
 // STATS
@@ -579,7 +812,7 @@ function renderStats() {
       <div class="scval" style="color:var(--official)">${fkc(offInc)}</div>
       <div class="scsub">výdaje ofiko: ${fkc(offExp)}</div>
     </div>
-    <div class="sc" style="background:var(--unoffi-bg);border-color:var(--unoffi-dim)">
+    <div class="sc" style="background:var(--unofficial-bg);border-color:var(--unofficial-dim)">
       <div class="sclbl" style="color:var(--unofficial)">🔴 Příjmy neofiko</div>
       <div class="scval" style="color:var(--unofficial)">${fkc(unoffInc)}</div>
       <div class="scsub">výdaje neofiko: ${fkc(unoffExp)}</div>
@@ -590,6 +823,14 @@ function toast(msg) {
   const t = document.getElementById('toast'); t.textContent=msg;
   t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),2600);
 }
+
+window.setTyp = setTyp; window.setKasa = setKasa; window.setCat = setCat; window.validateForm = validateForm;
+window.openAdd = openAdd; window.saveTx = saveTx; window.closeOv = closeOv;
+window.openEditByIndex = openEditByIndex; window.setETyp = setETyp; window.setEKasa = setEKasa;
+window.setEPerson = setEPerson; window.setECat = setECat; window.validateEditForm = validateEditForm;
+window.saveEditTx = saveEditTx; window.deleteEditTx = deleteEditTx;
+window.openHistory = openHistory; window.closeScreen = closeScreen;
+window.openStats = openStats; window.setPeriod = setPeriod;
 
 refreshAll();
 </script>
