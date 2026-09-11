@@ -608,6 +608,11 @@ if (t.typ === 'income') unoffIn += amt; else unoffOut += amt;
 if (t.typ === 'income') offBal += amt; else offBal -= amt;
 }
 });
+// Výkupy (appka Výkup palet) se platí z oficiální kasy a snižují ji, stejně jako ostatní výdaje od data ukotvení.
+gv().forEach(t => {
+if (!t.ts || t.ts < anchor.date) return;
+offBal -= Number(t.total) || 0;
+});
 if (bt) { bt.textContent = fkc(offBal); bt.style.fontSize = '34px'; bt.style.color = offBal>=0?'var(--green)':'var(--red)'; }
 if (bts) bts.textContent = 'oficiální kasa · od ' + fd(new Date(anchor.date));
 if (ui) ui.textContent = '+' + fkc(unoffIn);
@@ -619,7 +624,8 @@ const h = gh();
 const today = new Date(); today.setHours(0,0,0,0);
 const todayTx = h.filter(t => new Date(t.ts) >= today);
 const inc = todayTx.filter(t => t.typ === 'income').reduce((s,t) => s+t.amt, 0);
-const exp = todayTx.filter(t => t.typ === 'expense').reduce((s,t) => s+t.amt, 0);
+const vykupToday = gv().filter(t => t.ts && new Date(t.ts) >= today).reduce((s,t) => s + (Number(t.total)||0), 0);
+const exp = todayTx.filter(t => t.typ === 'expense').reduce((s,t) => s+t.amt, 0) + vykupToday;
 document.getElementById('today-in').textContent = fkc(inc);
 document.getElementById('today-out').textContent = fkc(exp);
 }
