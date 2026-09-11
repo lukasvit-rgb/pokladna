@@ -9,12 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#f2f2f7; --bg2:#ffffff; --bg3:#e8e8ed; --bg4:#d8d8dd;
-  --border:#cccccc; --white:#111111; --dim:#888888; --muted:#bbbbbb;
-  --official:#2980b9; --official-bg:#e8f0f8; --official-dim:#b0cce0;
-  --unofficial:#e67e22; --unofficial-bg:#fdf0e8; --unofficial-dim:#f0c898;
-  --green:#27ae60; --red:#e05555; --yellow:#e6a800;
-  --hh:58px;
+--bg:#f2f2f7; --bg2:#ffffff; --bg3:#e8e8ed; --bg4:#d8d8dd;
+--border:#cccccc; --white:#111111; --dim:#888888; --muted:#bbbbbb;
+--official:#2980b9; --official-bg:#e8f0f8; --official-dim:#b0cce0;
+--unofficial:#e67e22; --unofficial-bg:#fdf0e8; --unofficial-dim:#f0c898;
+--green:#27ae60; --red:#e05555; --yellow:#e6a800;
+--vykup:#16a085; --vykup-bg:#eafaf6; --vykup-dim:#a8e6d4;
+--hh:58px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:90px;touch-action:manipulation}
@@ -64,6 +65,13 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 .today-item-val.plus{color:var(--green)}
 .today-item-val.minus{color:var(--red)}
 
+/* VYKUP STRIP */
+.vykup-strip{margin:0 12px 10px;background:var(--vykup-bg);border:1px solid var(--vykup-dim);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.vykup-strip:active{background:#d8f3ec}
+.vykup-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--vykup)}
+.vykup-amt{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--vykup)}
+.vykup-sub{font-size:10px;color:var(--dim);text-align:right;max-width:150px}
+
 /* SECTION LABEL */
 .sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);padding:8px 12px 4px}
 
@@ -89,9 +97,9 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 /* BOTTOM BAR */
 .bbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--bg2);border-top:1px solid var(--border);padding:10px 12px;display:flex;gap:8px;z-index:100}
 .btn{padding:13px;border:none;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .12s}
-.bico{background:var(--bg3);color:var(--dim);border:1px solid var(--border);width:50px;font-size:18px;flex-shrink:0}
+.bico{background:var(--bg3);color:var(--dim);border:1px solid var(--border);width:46px;font-size:17px;flex-shrink:0;padding:13px 6px}
 .bico:active{background:var(--border)}
-.badd{flex:1;background:#111111;color:#ffffff;font-size:16px}
+.badd{flex:1;background:#111111;color:#ffffff;font-size:15px;white-space:nowrap}
 .badd:active{background:#ccc;transform:scale(.98)}
 
 /* OVERLAY */
@@ -171,212 +179,239 @@ html,body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-seri
 .hamt.minus{color:var(--red)}
 .hdet2{font-size:11px;color:var(--dim);line-height:1.6}
 .hnote2{font-size:11px;color:var(--dim);font-style:italic;margin-top:3px}
+
+/* VYKUP LIST (screen) */
+.vlist{display:flex;flex-direction:column;gap:7px;padding:10px 12px}
+.vitem{background:#ffffff;border-radius:8px;padding:11px 13px;border-left:3px solid var(--vykup)}
+.vhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.vdate{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--dim)}
+.vamt{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--vykup)}
+.vitems-row{font-size:11px;color:var(--dim);line-height:1.6}
+.vnote{font-size:11px;color:var(--dim);font-style:italic;margin-top:3px}
 </style>
 </head>
 <body>
 
 <!-- LOGIN SCREEN -->
 <div class="login-ov open" id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">POKLADNA</div>
-    <div class="login-sub">Palety Vít</div>
-    <div class="fgrp">
-      <label class="flbl">E-mail</label>
-      <input class="finp" type="email" id="login-email" placeholder="e-mail" autocomplete="username">
-    </div>
-    <div class="fgrp">
-      <label class="flbl">Heslo</label>
-      <input class="finp" type="password" id="login-pass" placeholder="heslo" autocomplete="current-password">
-    </div>
-    <div class="login-err" id="login-err"></div>
-    <button class="bok" onclick="submitLogin()">Přihlásit se</button>
-  </div>
+<div class="login-box">
+<div class="login-logo">POKLADNA</div>
+<div class="login-sub">Palety Vít</div>
+<div class="fgrp">
+<label class="flbl">E-mail</label>
+<input class="finp" type="email" id="login-email" placeholder="e-mail" autocomplete="username">
+</div>
+<div class="fgrp">
+<label class="flbl">Heslo</label>
+<input class="finp" type="password" id="login-pass" placeholder="heslo" autocomplete="current-password">
+</div>
+<div class="login-err" id="login-err"></div>
+<button class="bok" onclick="submitLogin()">Přihlásit se</button>
+</div>
 </div>
 
 <div id="app-root" style="display:none">
 
 <div class="header">
-  <div style="display:flex;align-items:center;gap:14px">
-    <div style="display:flex;flex-direction:column;line-height:1">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;letter-spacing:5px;color:var(--white)">PALETY</div>
-      <div style="display:flex;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;letter-spacing:5px;color:var(--white)"><span>VÍ</span><span>T</span></div>
-    </div>
-    <div style="width:1px;height:32px;background:var(--border)"></div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--dim)">POKLADNA</div>
-  </div>
-  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
-    <div class="who-chip" id="who-chip" onclick="confirmLogout()"><span id="who-name">—</span><span class="ico">⏻</span></div>
-    <div class="hdate" id="hdate"></div>
-  </div>
+<div style="display:flex;align-items:center;gap:14px">
+<div style="display:flex;flex-direction:column;line-height:1">
+<div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;letter-spacing:5px;color:var(--white)">PALETY</div>
+<div style="display:flex;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;letter-spacing:5px;color:var(--white)"><span>VÍ</span><span>T</span></div>
+</div>
+<div style="width:1px;height:32px;background:var(--border)"></div>
+<div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--dim)">POKLADNA</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+<div class="who-chip" id="who-chip" onclick="confirmLogout()"><span id="who-name">—</span><span class="ico">⏻</span></div>
+<div class="hdate" id="hdate"></div>
+</div>
 </div>
 
 <div class="balance-wrap">
-  <div class="bcard official" style="background:#e8f5ec;border-color:#a8d8b0">
-    <div class="bcard-lbl" style="color:var(--green)">Zůstatek</div>
-    <div class="bcard-amt" id="bal-total" style="color:var(--green)">—</div>
-    <div class="bcard-sub" id="bal-total-sub">načítám…</div>
-  </div>
+<div class="bcard official" style="background:#e8f5ec;border-color:#a8d8b0">
+<div class="bcard-lbl" style="color:var(--green)">Zůstatek</div>
+<div class="bcard-amt" id="bal-total" style="color:var(--green)">—</div>
+<div class="bcard-sub" id="bal-total-sub">načítám…</div>
+</div>
 </div>
 
 <div class="unof-strip">
-  <div class="unof-lbl">Neoficiální od ukotvení</div>
-  <div class="today-vals">
-    <div class="today-item">
-      <div class="today-item-lbl">Příjmy</div>
-      <div class="today-item-val plus" id="unof-in">—</div>
-    </div>
-    <div class="today-item">
-      <div class="today-item-lbl">Výdaje</div>
-      <div class="today-item-val minus" id="unof-out">—</div>
-    </div>
-  </div>
+<div class="unof-lbl">Neoficiální od ukotvení</div>
+<div class="today-vals">
+<div class="today-item">
+<div class="today-item-lbl">Příjmy</div>
+<div class="today-item-val plus" id="unof-in">—</div>
+</div>
+<div class="today-item">
+<div class="today-item-lbl">Výdaje</div>
+<div class="today-item-val minus" id="unof-out">—</div>
+</div>
+</div>
 </div>
 
 <div class="today-strip">
-  <div class="today-lbl">Dnes</div>
-  <div class="today-vals">
-    <div class="today-item">
-      <div class="today-item-lbl">Příjmy</div>
-      <div class="today-item-val plus" id="today-in">0 Kč</div>
-    </div>
-    <div class="today-item">
-      <div class="today-item-lbl">Výdaje</div>
-      <div class="today-item-val minus" id="today-out">0 Kč</div>
-    </div>
-  </div>
+<div class="today-lbl">Dnes</div>
+<div class="today-vals">
+<div class="today-item">
+<div class="today-item-lbl">Příjmy</div>
+<div class="today-item-val plus" id="today-in">0 Kč</div>
+</div>
+<div class="today-item">
+<div class="today-item-lbl">Výdaje</div>
+<div class="today-item-val minus" id="today-out">0 Kč</div>
+</div>
+</div>
+</div>
+
+<div class="vykup-strip" onclick="openVykupy()">
+<div>
+<div class="vykup-lbl">Výkupy dnes</div>
+<div class="vykup-amt" id="vykup-today-amt">0 Kč</div>
+</div>
+<div class="vykup-sub" id="vykup-today-sub">zatím žádný výkup</div>
 </div>
 
 <div class="sec-lbl">Poslední transakce</div>
 <div class="txlist" id="txlist"></div>
 
 <div class="bbar">
-  <button class="btn bico" onclick="openHistory()">☰</button>
-  <button class="btn badd" onclick="openAdd()">+ Přidat transakci</button>
-  <button class="btn bico" onclick="openStats()">📊</button>
+<button class="btn bico" onclick="openHistory()">☰</button>
+<button class="btn bico" onclick="openVykupy()">📦</button>
+<button class="btn badd" onclick="openAdd()">+ Přidat transakci</button>
+<button class="btn bico" onclick="openStats()">📊</button>
 </div>
 
 <!-- ADD MODAL -->
 <div class="ov" id="ov-add">
-  <div class="modal">
-    <div class="mhd"><div class="mtit">Nová transakce</div><button class="mclose" onclick="closeOv('ov-add')">✕</button></div>
+<div class="modal">
+<div class="mhd"><div class="mtit">Nová transakce</div><button class="mclose" onclick="closeOv('ov-add')">✕</button></div>
 
-    <div class="fgrp">
-      <label class="flbl">Typ</label>
-      <div class="seg">
-        <button class="seg-btn on-income" id="typ-income" onclick="setTyp('income')">↑ Příjem</button>
-        <button class="seg-btn" id="typ-expense" onclick="setTyp('expense')">↓ Výdaj</button>
-      </div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Typ</label>
+<div class="seg">
+<button class="seg-btn on-income" id="typ-income" onclick="setTyp('income')">↑ Příjem</button>
+<button class="seg-btn" id="typ-expense" onclick="setTyp('expense')">↓ Výdaj</button>
+</div>
+</div>
 
-    <div class="fgrp" id="fgrp-kasa">
-      <label class="flbl">Kasa</label>
-      <div class="seg">
-        <button class="seg-btn on-official" id="kas-official" onclick="setKasa('official')">🔵 Oficiální</button>
-        <button class="seg-btn" id="kas-unofficial" onclick="setKasa('unofficial')">🔴 Neoficiální</button>
-      </div>
-    </div>
+<div class="fgrp" id="fgrp-kasa">
+<label class="flbl">Kasa</label>
+<div class="seg">
+<button class="seg-btn on-official" id="kas-official" onclick="setKasa('official')">🔵 Oficiální</button>
+<button class="seg-btn" id="kas-unofficial" onclick="setKasa('unofficial')">🔴 Neoficiální</button>
+</div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Kdo</label>
-      <div class="fstatic" id="add-who-display">—</div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Kdo</label>
+<div class="fstatic" id="add-who-display">—</div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Kategorie</label>
-      <div class="cats" id="cats"></div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Kategorie</label>
+<div class="cats" id="cats"></div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Částka (Kč)</label>
-      <input class="finp" type="number" id="finp-amt" placeholder="0" inputmode="numeric" min="0" oninput="validateForm()">
-    </div>
+<div class="fgrp">
+<label class="flbl">Částka (Kč)</label>
+<input class="finp" type="number" id="finp-amt" placeholder="0" inputmode="numeric" min="0" oninput="validateForm()">
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Poznámka</label>
-      <input class="finp" type="text" id="finp-note" placeholder="Nepovinná poznámka…" maxlength="120">
-    </div>
+<div class="fgrp">
+<label class="flbl">Poznámka</label>
+<input class="finp" type="text" id="finp-note" placeholder="Nepovinná poznámka…" maxlength="120">
+</div>
 
-    <button class="bok" id="bok-add" onclick="saveTx()" disabled>✓ Uložit transakci</button>
-  </div>
+<button class="bok" id="bok-add" onclick="saveTx()" disabled>✓ Uložit transakci</button>
+</div>
 </div>
 
 <!-- EDIT / DETAIL MODAL -->
 <div class="ov" id="ov-edit">
-  <div class="modal">
-    <div class="mhd"><div class="mtit">Detail transakce</div><button class="mclose" onclick="closeOv('ov-edit')">✕</button></div>
+<div class="modal">
+<div class="mhd"><div class="mtit">Detail transakce</div><button class="mclose" onclick="closeOv('ov-edit')">✕</button></div>
 
-    <div class="fgrp">
-      <label class="flbl">Datum a čas</label>
-      <div class="fstatic" id="edit-datetime" style="color:var(--dim)">—</div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Datum a čas</label>
+<div class="fstatic" id="edit-datetime" style="color:var(--dim)">—</div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Typ</label>
-      <div class="seg">
-        <button class="seg-btn on-income" id="etyp-income" onclick="setETyp('income')">↑ Příjem</button>
-        <button class="seg-btn" id="etyp-expense" onclick="setETyp('expense')">↓ Výdaj</button>
-      </div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Typ</label>
+<div class="seg">
+<button class="seg-btn on-income" id="etyp-income" onclick="setETyp('income')">↑ Příjem</button>
+<button class="seg-btn" id="etyp-expense" onclick="setETyp('expense')">↓ Výdaj</button>
+</div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Kasa</label>
-      <div class="seg">
-        <button class="seg-btn on-official" id="ekas-official" onclick="setEKasa('official')">🔵 Oficiální</button>
-        <button class="seg-btn" id="ekas-unofficial" onclick="setEKasa('unofficial')">🔴 Neoficiální</button>
-      </div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Kasa</label>
+<div class="seg">
+<button class="seg-btn on-official" id="ekas-official" onclick="setEKasa('official')">🔵 Oficiální</button>
+<button class="seg-btn" id="ekas-unofficial" onclick="setEKasa('unofficial')">🔴 Neoficiální</button>
+</div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Kdo</label>
-      <div class="seg">
-        <button class="seg-btn on-person" id="eper-lukas" onclick="setEPerson('Lukáš')">Lukáš</button>
-        <button class="seg-btn" id="eper-kolega" onclick="setEPerson('Ondra')">Ondra</button>
-      </div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Kdo</label>
+<div class="seg">
+<button class="seg-btn on-person" id="eper-lukas" onclick="setEPerson('Lukáš')">Lukáš</button>
+<button class="seg-btn" id="eper-kolega" onclick="setEPerson('Ondra')">Ondra</button>
+</div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Kategorie</label>
-      <div class="cats" id="ecats"></div>
-    </div>
+<div class="fgrp">
+<label class="flbl">Kategorie</label>
+<div class="cats" id="ecats"></div>
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Částka (Kč)</label>
-      <input class="finp" type="number" id="einp-amt" inputmode="numeric" min="0" oninput="validateEditForm()">
-    </div>
+<div class="fgrp">
+<label class="flbl">Částka (Kč)</label>
+<input class="finp" type="number" id="einp-amt" inputmode="numeric" min="0" oninput="validateEditForm()">
+</div>
 
-    <div class="fgrp">
-      <label class="flbl">Poznámka</label>
-      <input class="finp" type="text" id="einp-note" maxlength="120">
-    </div>
+<div class="fgrp">
+<label class="flbl">Poznámka</label>
+<input class="finp" type="text" id="einp-note" maxlength="120">
+</div>
 
-    <button class="bok" id="bok-edit" onclick="saveEditTx()">✓ Uložit změny</button>
-    <button class="bdel" onclick="deleteEditTx()">🗑️ Smazat transakci</button>
-  </div>
+<button class="bok" id="bok-edit" onclick="saveEditTx()">✓ Uložit změny</button>
+<button class="bdel" onclick="deleteEditTx()">🗑️ Smazat transakci</button>
+</div>
 </div>
 
 <!-- HISTORY SCREEN -->
 <div class="screen" id="screen-history">
-  <div class="screen-hd">
-    <div class="screen-tit">Historie</div>
-    <button class="sclose" onclick="closeScreen('screen-history')">✕</button>
-  </div>
-  <div class="hlist" id="hlist"></div>
+<div class="screen-hd">
+<div class="screen-tit">Historie</div>
+<button class="sclose" onclick="closeScreen('screen-history')">✕</button>
+</div>
+<div class="hlist" id="hlist"></div>
 </div>
 
 <!-- STATS SCREEN -->
 <div class="screen" id="screen-stats">
-  <div class="screen-hd">
-    <div class="screen-tit">Statistiky</div>
-    <button class="sclose" onclick="closeScreen('screen-stats')">✕</button>
-  </div>
-  <div class="ptabs">
-    <button class="ptab on" onclick="setPeriod(0,this)">Dnes</button>
-    <button class="ptab" onclick="setPeriod(7,this)">7 dní</button>
-    <button class="ptab" onclick="setPeriod(30,this)">30 dní</button>
-  </div>
-  <div class="scards" id="scards"></div>
-  <div class="sec-lbl" style="padding-top:14px">Výdaje podle kategorie</div>
-  <div class="catlist" id="catlist"></div>
+<div class="screen-hd">
+<div class="screen-tit">Statistiky</div>
+<button class="sclose" onclick="closeScreen('screen-stats')">✕</button>
+</div>
+<div class="ptabs">
+<button class="ptab on" onclick="setPeriod(0,this)">Dnes</button>
+<button class="ptab" onclick="setPeriod(7,this)">7 dní</button>
+<button class="ptab" onclick="setPeriod(30,this)">30 dní</button>
+</div>
+<div class="scards" id="scards"></div>
+<div class="sec-lbl" style="padding-top:14px">Výdaje podle kategorie</div>
+<div class="catlist" id="catlist"></div>
+</div>
+
+<!-- VYKUPY SCREEN -->
+<div class="screen" id="screen-vykupy">
+<div class="screen-hd">
+<div class="screen-tit">Výkupy</div>
+<button class="sclose" onclick="closeScreen('screen-vykupy')">✕</button>
+</div>
+<div class="vlist" id="vlist"></div>
 </div>
 
 </div><!-- /app-root -->
@@ -389,12 +424,12 @@ import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, de
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD60m7hSErvSuOQul3kfAjWPpGfVmyVVuM",
-  authDomain: "vykup-palet.firebaseapp.com",
-  projectId: "vykup-palet",
-  storageBucket: "vykup-palet.firebasestorage.app",
-  messagingSenderId: "264591837143",
-  appId: "1:264591837143:web:5bd414b54a33a3fde26d92"
+apiKey: "AIzaSyD60m7hSErvSuOQul3kfAjWPpGfVmyVVuM",
+authDomain: "vykup-palet.firebaseapp.com",
+projectId: "vykup-palet",
+storageBucket: "vykup-palet.firebasestorage.app",
+messagingSenderId: "264591837143",
+appId: "1:264591837143:web:5bd414b54a33a3fde26d92"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -402,107 +437,119 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 const PERSON_BY_EMAIL = {
-  'lukas.vit@v-pallets.cz': 'Lukáš',
-  'ondrej.vit@paletyvit.cz': 'Ondra'
+'lukas.vit@v-pallets.cz': 'Lukáš',
+'ondrej.vit@paletyvit.cz': 'Ondra'
 };
 
 window.saveToFirebase = async function(rec) {
-  try {
-    await addDoc(collection(db, "pokladna"), rec);
-    return true;
-  } catch(e) { console.error(e); return false; }
+try {
+await addDoc(collection(db, "pokladna"), rec);
+return true;
+} catch(e) { console.error(e); return false; }
 };
 
 window.updateInFirebase = async function(id, fields) {
-  try {
-    await updateDoc(doc(db, "pokladna", id), fields);
-    return true;
-  } catch(e) { console.error(e); return false; }
+try {
+await updateDoc(doc(db, "pokladna", id), fields);
+return true;
+} catch(e) { console.error(e); return false; }
 };
 
 window.deleteFromFirebase = async function(id) {
-  try {
-    await deleteDoc(doc(db, "pokladna", id));
-    return true;
-  } catch(e) { console.error(e); return false; }
+try {
+await deleteDoc(doc(db, "pokladna", id));
+return true;
+} catch(e) { console.error(e); return false; }
 };
 
 window.loadAnchor = async function() {
-  try {
-    const snap = await getDoc(doc(db, 'pokladna_meta', 'anchor'));
-    if (snap.exists()) {
-      const data = snap.data();
-      window._anchor = { date: data.date, official: Number(data.official) };
-    } else {
-      window._anchor = null;
-    }
-  } catch(e) { console.error('anchor fetch failed', e); window._anchor = null; }
-  if (window.refreshAll) window.refreshAll();
+try {
+const snap = await getDoc(doc(db, 'pokladna_meta', 'anchor'));
+if (snap.exists()) {
+const data = snap.data();
+window._anchor = { date: data.date, official: Number(data.official) };
+} else {
+window._anchor = null;
+}
+} catch(e) { console.error('anchor fetch failed', e); window._anchor = null; }
+if (window.refreshAll) window.refreshAll();
 };
 
 let unsubscribeTx = null;
+let unsubscribeVykupy = null;
 
 window.doLogin = async function(email, password) {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    return null;
-  } catch(e) {
-    return e.code || 'auth-error';
-  }
+try {
+await signInWithEmailAndPassword(auth, email, password);
+return null;
+} catch(e) {
+return e.code || 'auth-error';
+}
 };
 
 window.doLogout = function() {
-  if (unsubscribeTx) { unsubscribeTx(); unsubscribeTx = null; }
-  signOut(auth);
+if (unsubscribeTx) { unsubscribeTx(); unsubscribeTx = null; }
+if (unsubscribeVykupy) { unsubscribeVykupy(); unsubscribeVykupy = null; }
+signOut(auth);
 };
 
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    window._currentPerson = PERSON_BY_EMAIL[user.email] || user.email;
-    document.getElementById('login-screen').classList.remove('open');
-    document.getElementById('app-root').style.display = '';
-    const whoName = document.getElementById('who-name');
-    if (whoName) whoName.textContent = window._currentPerson;
-    window.loadAnchor();
-    if (!unsubscribeTx) {
-      const q = query(collection(db, "pokladna"), orderBy("ts", "desc"), limit(2000));
-      unsubscribeTx = onSnapshot(q, (snapshot) => {
-        const data = [];
-        snapshot.forEach(d => data.push({...d.data(), _id: d.id}));
-        window._txData = data;
-        try { localStorage.setItem('pk_hist', JSON.stringify(data)); } catch(e) { console.error('localStorage save failed:', e); }
-        if (window.refreshAll) window.refreshAll();
-      });
-    }
-  } else {
-    window._currentPerson = null;
-    window._txData = null;
-    document.getElementById('login-screen').classList.add('open');
-    document.getElementById('app-root').style.display = 'none';
-  }
+if (user) {
+window._currentPerson = PERSON_BY_EMAIL[user.email] || user.email;
+document.getElementById('login-screen').classList.remove('open');
+document.getElementById('app-root').style.display = '';
+const whoName = document.getElementById('who-name');
+if (whoName) whoName.textContent = window._currentPerson;
+window.loadAnchor();
+if (!unsubscribeTx) {
+const q = query(collection(db, "pokladna"), orderBy("ts", "desc"), limit(2000));
+unsubscribeTx = onSnapshot(q, (snapshot) => {
+const data = [];
+snapshot.forEach(d => data.push({...d.data(), _id: d.id}));
+window._txData = data;
+try { localStorage.setItem('pk_hist', JSON.stringify(data)); } catch(e) { console.error('localStorage save failed:', e); }
+if (window.refreshAll) window.refreshAll();
+});
+}
+if (!unsubscribeVykupy) {
+const qv = query(collection(db, "vykupy"), orderBy("ts", "desc"), limit(2000));
+unsubscribeVykupy = onSnapshot(qv, (snapshot) => {
+const vdata = [];
+snapshot.forEach(d => vdata.push({...d.data(), _id: d.id}));
+window._vykupyData = vdata;
+if (window.refreshAll) window.refreshAll();
+});
+}
+} else {
+window._currentPerson = null;
+window._txData = null;
+window._vykupyData = null;
+document.getElementById('login-screen').classList.add('open');
+document.getElementById('app-root').style.display = 'none';
+}
 });
 
 window.submitLogin = async function() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const errEl = document.getElementById('login-err');
-  errEl.style.display = 'none';
-  if (!email || !pass) return;
-  const err = await window.doLogin(email, pass);
-  if (err) {
-    errEl.textContent = 'Přihlášení se nepovedlo. Zkontroluj e-mail a heslo.';
-    errEl.style.display = 'block';
-  }
+const email = document.getElementById('login-email').value.trim();
+const pass = document.getElementById('login-pass').value;
+const errEl = document.getElementById('login-err');
+errEl.style.display = 'none';
+if (!email || !pass) return;
+const err = await window.doLogin(email, pass);
+if (err) {
+errEl.textContent = 'Přihlášení se nepovedlo. Zkontroluj e-mail a heslo.';
+errEl.style.display = 'block';
+}
 };
 
 window.confirmLogout = function() {
-  if (confirm('Odhlásit se z appky?')) window.doLogout();
+if (confirm('Odhlásit se z appky?')) window.doLogout();
 };
 </script>
 
 <script>
 const CATS_EXPENSE = ['Výkup palet','Mzda','Záloha na mzdu','Doprava','Nafta','Materiál','Jiný výdaj'];
-const CATS_INCOME  = ['Vklad','Maloprodej','Platba FA cash','Jiný příjem'];
+const CATS_INCOME = ['Vklad','Maloprodej','Platba FA cash','Jiný příjem'];
 const SHEET_WRITE_URL = 'https://script.google.com/macros/s/AKfycbwkS6muxUuJXqvub_QR2NxXjy361AZuLNrVAWzIXhK4-1531aV_cQ5O121h-_PgjHOv8Q/exec';
 
 const fd = d => (d?new Date(d):new Date()).toLocaleDateString('cs-CZ',{day:'2-digit',month:'2-digit',year:'numeric'});
@@ -516,157 +563,201 @@ let formTyp = 'income', formKasa = 'official', formCat = '';
 let editTyp = 'income', editKasa = 'official', editPerson = 'Lukáš', editCat = '', editTx = null;
 
 function gh() {
-  if (window._txData) return window._txData;
-  try { return JSON.parse(localStorage.getItem('pk_hist') || '[]'); } catch(e) { return []; }
+if (window._txData) return window._txData;
+try { return JSON.parse(localStorage.getItem('pk_hist') || '[]'); } catch(e) { return []; }
+}
+
+function gv() {
+return window._vykupyData || [];
 }
 
 function refreshAll() {
-  renderBalances();
-  renderToday();
-  renderRecent();
-  if (document.getElementById('screen-stats').classList.contains('open')) renderStats();
-  if (document.getElementById('screen-history').classList.contains('open')) renderHistory();
+renderBalances();
+renderToday();
+renderRecent();
+renderVykupToday();
+if (document.getElementById('screen-stats').classList.contains('open')) renderStats();
+if (document.getElementById('screen-history').classList.contains('open')) renderHistory();
+const scrV = document.getElementById('screen-vykupy');
+if (scrV && scrV.classList.contains('open')) renderVykupy();
 }
 window.refreshAll = refreshAll;
 
 function renderBalances() {
-  const h = gh();
-  const anchor = window._anchor;
-  const bt = document.getElementById('bal-total');
-  const bts = document.getElementById('bal-total-sub');
-  const ui = document.getElementById('unof-in');
-  const uo = document.getElementById('unof-out');
-  if (!anchor) {
-    if (bt) { bt.textContent = 'Čeká na ukotvení'; bt.style.fontSize = '20px'; }
-    if (bts) bts.textContent = 'zůstatek zatím není ukotvený k reálnému stavu kasy';
-    if (ui) ui.textContent = '—';
-    if (uo) uo.textContent = '—';
-    return;
-  }
-  let offBal = anchor.official;
-  let unoffIn = 0, unoffOut = 0;
-  h.forEach(t => {
-    if (!t.ts || t.ts < anchor.date || t.amt === '' || t.amt === undefined) return;
-    const amt = Number(t.amt) || 0;
-    if (t.kasa === 'unofficial') {
-      if (t.typ === 'income') unoffIn += amt; else unoffOut += amt;
-    } else {
-      if (t.typ === 'income') offBal += amt; else offBal -= amt;
-    }
-  });
-  if (bt) { bt.textContent = fkc(offBal); bt.style.fontSize = '34px'; bt.style.color = offBal>=0?'var(--green)':'var(--red)'; }
-  if (bts) bts.textContent = 'oficiální kasa · od ' + fd(new Date(anchor.date));
-  if (ui) ui.textContent = '+' + fkc(unoffIn);
-  if (uo) uo.textContent = '−' + fkc(unoffOut);
+const h = gh();
+const anchor = window._anchor;
+const bt = document.getElementById('bal-total');
+const bts = document.getElementById('bal-total-sub');
+const ui = document.getElementById('unof-in');
+const uo = document.getElementById('unof-out');
+if (!anchor) {
+if (bt) { bt.textContent = 'Čeká na ukotvení'; bt.style.fontSize = '20px'; }
+if (bts) bts.textContent = 'zůstatek zatím není ukotvený k reálnému stavu kasy';
+if (ui) ui.textContent = '—';
+if (uo) uo.textContent = '—';
+return;
+}
+let offBal = anchor.official;
+let unoffIn = 0, unoffOut = 0;
+h.forEach(t => {
+if (!t.ts || t.ts < anchor.date || t.amt === '' || t.amt === undefined) return;
+const amt = Number(t.amt) || 0;
+if (t.kasa === 'unofficial') {
+if (t.typ === 'income') unoffIn += amt; else unoffOut += amt;
+} else {
+if (t.typ === 'income') offBal += amt; else offBal -= amt;
+}
+});
+if (bt) { bt.textContent = fkc(offBal); bt.style.fontSize = '34px'; bt.style.color = offBal>=0?'var(--green)':'var(--red)'; }
+if (bts) bts.textContent = 'oficiální kasa · od ' + fd(new Date(anchor.date));
+if (ui) ui.textContent = '+' + fkc(unoffIn);
+if (uo) uo.textContent = '−' + fkc(unoffOut);
 }
 
 function renderToday() {
-  const h = gh();
-  const today = new Date(); today.setHours(0,0,0,0);
-  const todayTx = h.filter(t => new Date(t.ts) >= today);
-  const inc = todayTx.filter(t => t.typ === 'income').reduce((s,t) => s+t.amt, 0);
-  const exp = todayTx.filter(t => t.typ === 'expense').reduce((s,t) => s+t.amt, 0);
-  document.getElementById('today-in').textContent = fkc(inc);
-  document.getElementById('today-out').textContent = fkc(exp);
+const h = gh();
+const today = new Date(); today.setHours(0,0,0,0);
+const todayTx = h.filter(t => new Date(t.ts) >= today);
+const inc = todayTx.filter(t => t.typ === 'income').reduce((s,t) => s+t.amt, 0);
+const exp = todayTx.filter(t => t.typ === 'expense').reduce((s,t) => s+t.amt, 0);
+document.getElementById('today-in').textContent = fkc(inc);
+document.getElementById('today-out').textContent = fkc(exp);
 }
 
 function renderRecent() {
-  const full = gh();
-  const h = full.slice(0, 10);
-  const el = document.getElementById('txlist');
-  if (h.length === 0) { el.innerHTML = '<div class="empty">Žádné transakce zatím.</div>'; return; }
-  el.innerHTML = h.map((t,i) => txHTML(t, i)).join('');
+const full = gh();
+const h = full.slice(0, 10);
+const el = document.getElementById('txlist');
+if (h.length === 0) { el.innerHTML = '<div class="empty">Žádné transakce zatím.</div>'; return; }
+el.innerHTML = h.map((t,i) => txHTML(t, i)).join('');
 }
 
 function txHTML(t, idx) {
-  const icon = t.typ === 'income' ? '↑' : '↓';
-  const iconCls = t.typ === 'income' ? 'income' : 'expense';
-  const amtCls = t.typ === 'income' ? 'plus' : 'minus';
-  const sign = t.typ === 'income' ? '+' : '−';
-  const kasaCls = t.kasa === 'official' ? 'official' : 'unofficial';
-  const kasaLbl = t.kasa === 'official' ? 'OFICIÁLNÍ' : 'NEOFICIÁLNÍ';
-  return `<div class="txitem" onclick="openEditByIndex(${idx})">
-    <div class="txitem-icon ${iconCls}">${icon}</div>
-    <div class="txitem-info">
-      <div class="txitem-cat">${t.cat}</div>
-      <div class="txitem-meta">${t.date} ${t.time} · ${t.person}</div>
-    </div>
-    <div class="txitem-right">
-      <div class="txitem-amt ${amtCls}">${sign}${fkc(t.amt)}</div>
-      <div class="txitem-kasa ${kasaCls}">${kasaLbl}</div>
-    </div>
-  </div>`;
+const icon = t.typ === 'income' ? '↑' : '↓';
+const iconCls = t.typ === 'income' ? 'income' : 'expense';
+const amtCls = t.typ === 'income' ? 'plus' : 'minus';
+const sign = t.typ === 'income' ? '+' : '−';
+const kasaCls = t.kasa === 'official' ? 'official' : 'unofficial';
+const kasaLbl = t.kasa === 'official' ? 'OFICIÁLNÍ' : 'NEOFICIÁLNÍ';
+return `<div class="txitem" onclick="openEditByIndex(${idx})">
+<div class="txitem-icon ${iconCls}">${icon}</div>
+<div class="txitem-info">
+<div class="txitem-cat">${t.cat}</div>
+<div class="txitem-meta">${t.date} ${t.time} · ${t.person}</div>
+</div>
+<div class="txitem-right">
+<div class="txitem-amt ${amtCls}">${sign}${fkc(t.amt)}</div>
+<div class="txitem-kasa ${kasaCls}">${kasaLbl}</div>
+</div>
+</div>`;
 }
+
+// VYKUPY (živě z appky Výkup palet, jen ke čtení)
+function vykupItemsHTML(items) {
+if (!items || !items.length) return '';
+return items.map(it => `${it.n} ${it.ks} ks × ${fkc(it.pr)} = ${fkc(it.sub)}`).join('<br>');
+}
+
+function renderVykupToday() {
+const v = gv();
+const today = new Date(); today.setHours(0,0,0,0);
+const todays = v.filter(t => t.ts && new Date(t.ts) >= today);
+const total = todays.reduce((s,t) => s + (Number(t.total)||0), 0);
+const amtEl = document.getElementById('vykup-today-amt');
+const subEl = document.getElementById('vykup-today-sub');
+if (amtEl) amtEl.textContent = fkc(total);
+if (subEl) {
+if (todays.length === 0) subEl.textContent = 'zatím žádný výkup';
+else subEl.textContent = todays.length + '× · poslední v ' + (todays[0].time || '');
+}
+}
+
+function renderVykupy() {
+const v = gv();
+const el = document.getElementById('vlist');
+if (!el) return;
+if (v.length === 0) { el.innerHTML = '<div class="empty">Žádné výkupy zatím.</div>'; return; }
+el.innerHTML = v.map(t => `<div class="vitem">
+<div class="vhd">
+<div class="vdate">${t.date || ''} ${t.time || ''}</div>
+<div class="vamt">${fkc(t.total||0)}</div>
+</div>
+<div class="vitems-row">${vykupItemsHTML(t.items)}</div>
+${t.note?`<div class="vnote">${t.note}</div>`:''}
+</div>`).join('');
+}
+
+function openVykupy() { renderVykupy(); document.getElementById('screen-vykupy').classList.add('open'); }
 
 // ADD FORM
 function setTyp(v) {
-  formTyp = v; formCat = '';
-  document.getElementById('typ-income').className = 'seg-btn' + (v==='income'?' on-income':'');
-  document.getElementById('typ-expense').className = 'seg-btn' + (v==='expense'?' on-expense':'');
-  document.getElementById('fgrp-kasa').style.display = '';
-  formKasa = 'official';
-  document.getElementById('kas-official').className='seg-btn on-official';
-  document.getElementById('kas-unofficial').className='seg-btn';
-  renderCats();
-  validateForm();
+formTyp = v; formCat = '';
+document.getElementById('typ-income').className = 'seg-btn' + (v==='income'?' on-income':'');
+document.getElementById('typ-expense').className = 'seg-btn' + (v==='expense'?' on-expense':'');
+document.getElementById('fgrp-kasa').style.display = '';
+formKasa = 'official';
+document.getElementById('kas-official').className='seg-btn on-official';
+document.getElementById('kas-unofficial').className='seg-btn';
+renderCats();
+validateForm();
 }
 
 function setKasa(v) {
-  formKasa = v;
-  document.getElementById('kas-official').className = 'seg-btn' + (v==='official'?' on-official':'');
-  document.getElementById('kas-unofficial').className = 'seg-btn' + (v==='unofficial'?' on-unofficial':'');
+formKasa = v;
+document.getElementById('kas-official').className = 'seg-btn' + (v==='official'?' on-official':'');
+document.getElementById('kas-unofficial').className = 'seg-btn' + (v==='unofficial'?' on-unofficial':'');
 }
 
 function setCat(v) {
-  formCat = v;
-  document.querySelectorAll('#cats .cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
-  validateForm();
+formCat = v;
+document.querySelectorAll('#cats .cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
+validateForm();
 }
 
 function renderCats() {
-  const cats = formTyp === 'income' ? CATS_INCOME : CATS_EXPENSE;
-  document.getElementById('cats').innerHTML = cats.map(c =>
-    `<button class="cat-btn${formCat===c?' on':''}" data-cat="${c}" onclick="setCat('${c}')">${c}</button>`
-  ).join('');
+const cats = formTyp === 'income' ? CATS_INCOME : CATS_EXPENSE;
+document.getElementById('cats').innerHTML = cats.map(c =>
+`<button class="cat-btn${formCat===c?' on':''}" data-cat="${c}" onclick="setCat('${c}')">${c}</button>`
+).join('');
 }
 
 function validateForm() {
-  const amt = parseFloat(document.getElementById('finp-amt').value);
-  document.getElementById('bok-add').disabled = !(formCat && amt > 0);
+const amt = parseFloat(document.getElementById('finp-amt').value);
+document.getElementById('bok-add').disabled = !(formCat && amt > 0);
 }
 
 function openAdd() {
-  formTyp='income'; formKasa='official'; formCat='';
-  document.getElementById('typ-income').className='seg-btn on-income';
-  document.getElementById('typ-expense').className='seg-btn';
-  document.getElementById('kas-official').className='seg-btn on-official';
-  document.getElementById('fgrp-kasa').style.display='';
-  document.getElementById('kas-unofficial').className='seg-btn';
-  document.getElementById('add-who-display').textContent = window._currentPerson || '—';
-  document.getElementById('finp-amt').value='';
-  document.getElementById('finp-note').value='';
-  document.getElementById('bok-add').disabled=true;
-  renderCats();
-  document.getElementById('ov-add').classList.add('open');
+formTyp='income'; formKasa='official'; formCat='';
+document.getElementById('typ-income').className='seg-btn on-income';
+document.getElementById('typ-expense').className='seg-btn';
+document.getElementById('kas-official').className='seg-btn on-official';
+document.getElementById('fgrp-kasa').style.display='';
+document.getElementById('kas-unofficial').className='seg-btn';
+document.getElementById('add-who-display').textContent = window._currentPerson || '—';
+document.getElementById('finp-amt').value='';
+document.getElementById('finp-note').value='';
+document.getElementById('bok-add').disabled=true;
+renderCats();
+document.getElementById('ov-add').classList.add('open');
 }
 
 async function saveTx() {
-  const amt = parseFloat(document.getElementById('finp-amt').value);
-  const note = (document.getElementById('finp-note').value||'').trim();
-  if (!formCat || !amt) return;
-  const now = new Date();
-  const rec = {ts:now.toISOString(), date:fd(now), time:ft(now), typ:formTyp, kasa:formKasa, person:window._currentPerson || 'Neznámý', cat:formCat, amt, note};
-  document.getElementById('bok-add').disabled = true;
-  if (window.saveToFirebase) await window.saveToFirebase(rec);
-  else {
-    const h = gh(); h.unshift(rec); localStorage.setItem('pk_hist', JSON.stringify(h.slice(0,500)));
-    refreshAll();
-  }
-  const encoded = encodeURIComponent(JSON.stringify(rec));
-  const img = new Image();
-  img.src = SHEET_WRITE_URL + '?data=' + encoded;
-  closeOv('ov-add');
-  toast('✓ Transakce uložena');
+const amt = parseFloat(document.getElementById('finp-amt').value);
+const note = (document.getElementById('finp-note').value||'').trim();
+if (!formCat || !amt) return;
+const now = new Date();
+const rec = {ts:now.toISOString(), date:fd(now), time:ft(now), typ:formTyp, kasa:formKasa, person:window._currentPerson || 'Neznámý', cat:formCat, amt, note};
+document.getElementById('bok-add').disabled = true;
+if (window.saveToFirebase) await window.saveToFirebase(rec);
+else {
+const h = gh(); h.unshift(rec); localStorage.setItem('pk_hist', JSON.stringify(h.slice(0,500)));
+refreshAll();
+}
+const encoded = encodeURIComponent(JSON.stringify(rec));
+const img = new Image();
+img.src = SHEET_WRITE_URL + '?data=' + encoded;
+closeOv('ov-add');
+toast('✓ Transakce uložena');
 }
 
 function closeOv(id) { document.getElementById(id).classList.remove('open'); }
@@ -674,154 +765,154 @@ document.querySelectorAll('.ov').forEach(el => el.addEventListener('click', e =>
 
 // EDIT / DETAIL FORM
 function openEditByIndex(i) {
-  const h = gh();
-  if (h[i]) openEdit(h[i]);
+const h = gh();
+if (h[i]) openEdit(h[i]);
 }
 
 function openEdit(tx) {
-  editTx = tx;
-  editTyp = tx.typ; editKasa = tx.kasa || 'official'; editPerson = tx.person; editCat = tx.cat;
-  document.getElementById('edit-datetime').textContent = tx.date + ' ' + tx.time;
-  document.getElementById('etyp-income').className = 'seg-btn' + (editTyp==='income'?' on-income':'');
-  document.getElementById('etyp-expense').className = 'seg-btn' + (editTyp==='expense'?' on-expense':'');
-  document.getElementById('ekas-official').className = 'seg-btn' + (editKasa==='official'?' on-official':'');
-  document.getElementById('ekas-unofficial').className = 'seg-btn' + (editKasa==='unofficial'?' on-unofficial':'');
-  document.getElementById('eper-lukas').className = 'seg-btn' + (editPerson==='Lukáš'?' on-person':'');
-  document.getElementById('eper-kolega').className = 'seg-btn' + (editPerson==='Ondra'?' on-person':'');
-  document.getElementById('einp-amt').value = tx.amt;
-  document.getElementById('einp-note').value = tx.note || '';
-  renderECats();
-  document.getElementById('ov-edit').classList.add('open');
+editTx = tx;
+editTyp = tx.typ; editKasa = tx.kasa || 'official'; editPerson = tx.person; editCat = tx.cat;
+document.getElementById('edit-datetime').textContent = tx.date + ' ' + tx.time;
+document.getElementById('etyp-income').className = 'seg-btn' + (editTyp==='income'?' on-income':'');
+document.getElementById('etyp-expense').className = 'seg-btn' + (editTyp==='expense'?' on-expense':'');
+document.getElementById('ekas-official').className = 'seg-btn' + (editKasa==='official'?' on-official':'');
+document.getElementById('ekas-unofficial').className = 'seg-btn' + (editKasa==='unofficial'?' on-unofficial':'');
+document.getElementById('eper-lukas').className = 'seg-btn' + (editPerson==='Lukáš'?' on-person':'');
+document.getElementById('eper-kolega').className = 'seg-btn' + (editPerson==='Ondra'?' on-person':'');
+document.getElementById('einp-amt').value = tx.amt;
+document.getElementById('einp-note').value = tx.note || '';
+renderECats();
+document.getElementById('ov-edit').classList.add('open');
 }
 
 function setETyp(v) {
-  editTyp = v; editCat = '';
-  document.getElementById('etyp-income').className = 'seg-btn' + (v==='income'?' on-income':'');
-  document.getElementById('etyp-expense').className = 'seg-btn' + (v==='expense'?' on-expense':'');
-  renderECats();
+editTyp = v; editCat = '';
+document.getElementById('etyp-income').className = 'seg-btn' + (v==='income'?' on-income':'');
+document.getElementById('etyp-expense').className = 'seg-btn' + (v==='expense'?' on-expense':'');
+renderECats();
 }
 
 function setEKasa(v) {
-  editKasa = v;
-  document.getElementById('ekas-official').className = 'seg-btn' + (v==='official'?' on-official':'');
-  document.getElementById('ekas-unofficial').className = 'seg-btn' + (v==='unofficial'?' on-unofficial':'');
+editKasa = v;
+document.getElementById('ekas-official').className = 'seg-btn' + (v==='official'?' on-official':'');
+document.getElementById('ekas-unofficial').className = 'seg-btn' + (v==='unofficial'?' on-unofficial':'');
 }
 
 function setEPerson(v) {
-  editPerson = v;
-  document.getElementById('eper-lukas').className = 'seg-btn' + (v==='Lukáš'?' on-person':'');
-  document.getElementById('eper-kolega').className = 'seg-btn' + (v==='Ondra'?' on-person':'');
+editPerson = v;
+document.getElementById('eper-lukas').className = 'seg-btn' + (v==='Lukáš'?' on-person':'');
+document.getElementById('eper-kolega').className = 'seg-btn' + (v==='Ondra'?' on-person':'');
 }
 
 function setECat(v) {
-  editCat = v;
-  document.querySelectorAll('#ecats .cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
+editCat = v;
+document.querySelectorAll('#ecats .cat-btn').forEach(b => b.className = 'cat-btn' + (b.dataset.cat===v?' on':''));
 }
 
 function renderECats() {
-  const cats = editTyp === 'income' ? CATS_INCOME : CATS_EXPENSE;
-  document.getElementById('ecats').innerHTML = cats.map(c =>
-    `<button class="cat-btn${editCat===c?' on':''}" data-cat="${c}" onclick="setECat('${c}')">${c}</button>`
-  ).join('');
+const cats = editTyp === 'income' ? CATS_INCOME : CATS_EXPENSE;
+document.getElementById('ecats').innerHTML = cats.map(c =>
+`<button class="cat-btn${editCat===c?' on':''}" data-cat="${c}" onclick="setECat('${c}')">${c}</button>`
+).join('');
 }
 
 function validateEditForm() {
-  // ponecháno pro budoucí použití (zatím se tlačítko nezakazuje, aby šlo uložit i beze změny částky)
+// ponecháno pro budoucí použití (zatím se tlačítko nezakazuje, aby šlo uložit i beze změny částky)
 }
 
 async function saveEditTx() {
-  const amt = parseFloat(document.getElementById('einp-amt').value);
-  const note = (document.getElementById('einp-note').value||'').trim();
-  if (!editCat || !amt || !editTx) return;
-  const updated = { typ: editTyp, kasa: editKasa, person: editPerson, cat: editCat, amt, note };
-  if (editTx._id && window.updateInFirebase) await window.updateInFirebase(editTx._id, updated);
-  const sheetPayload = Object.assign({}, updated, {date: editTx.date, time: editTx.time});
-  const encoded = encodeURIComponent(JSON.stringify(sheetPayload));
-  const img = new Image();
-  img.src = SHEET_WRITE_URL + '?action=update&ts=' + encodeURIComponent(editTx.ts) + '&data=' + encoded;
-  closeOv('ov-edit');
-  toast('✓ Transakce upravena');
+const amt = parseFloat(document.getElementById('einp-amt').value);
+const note = (document.getElementById('einp-note').value||'').trim();
+if (!editCat || !amt || !editTx) return;
+const updated = { typ: editTyp, kasa: editKasa, person: editPerson, cat: editCat, amt, note };
+if (editTx._id && window.updateInFirebase) await window.updateInFirebase(editTx._id, updated);
+const sheetPayload = Object.assign({}, updated, {date: editTx.date, time: editTx.time});
+const encoded = encodeURIComponent(JSON.stringify(sheetPayload));
+const img = new Image();
+img.src = SHEET_WRITE_URL + '?action=update&ts=' + encodeURIComponent(editTx.ts) + '&data=' + encoded;
+closeOv('ov-edit');
+toast('✓ Transakce upravena');
 }
 
 async function deleteEditTx() {
-  if (!editTx) return;
-  if (!confirm('Smazat tuto transakci?')) return;
-  if (editTx._id && window.deleteFromFirebase) await window.deleteFromFirebase(editTx._id);
-  const img = new Image();
-  img.src = SHEET_WRITE_URL + '?action=delete&ts=' + encodeURIComponent(editTx.ts);
-  closeOv('ov-edit');
-  toast('🗑️ Transakce smazána');
+if (!editTx) return;
+if (!confirm('Smazat tuto transakci?')) return;
+if (editTx._id && window.deleteFromFirebase) await window.deleteFromFirebase(editTx._id);
+const img = new Image();
+img.src = SHEET_WRITE_URL + '?action=delete&ts=' + encodeURIComponent(editTx.ts);
+closeOv('ov-edit');
+toast('🗑️ Transakce smazána');
 }
 
 function openHistory() { renderHistory(); document.getElementById('screen-history').classList.add('open'); }
 function closeScreen(id) { document.getElementById(id).classList.remove('open'); }
 
 function renderHistory() {
-  const h = gh();
-  const el = document.getElementById('hlist');
-  if (h.length === 0) { el.innerHTML = '<div class="empty">Žádné transakce zatím.</div>'; return; }
-  el.innerHTML = h.map((t,i) => {
-    const amtCls = t.typ==='income'?'plus':'minus';
-    const sign = t.typ==='income'?'+':'−';
-    const kasaCls = t.kasa==='official'?'official':'unofficial';
-    const kasaLbl = t.kasa==='official'?'OFICIÁLNÍ':'NEOFICIÁLNÍ';
-    return `<div class="hitem ${t.typ}" onclick="openEditByIndex(${i})">
-      <div class="hhd">
-        <div class="hdate2">${t.date} ${t.time} · ${t.person}</div>
-        <div class="hamt ${amtCls}">${sign}${fkc(t.amt)}</div>
-      </div>
-      <div class="hdet2">${t.cat} · <span class="txitem-kasa ${kasaCls}">${kasaLbl}</span></div>
-      ${t.note?`<div class="hnote2">${t.note}</div>`:''}
-    </div>`;
-  }).join('');
+const h = gh();
+const el = document.getElementById('hlist');
+if (h.length === 0) { el.innerHTML = '<div class="empty">Žádné transakce zatím.</div>'; return; }
+el.innerHTML = h.map((t,i) => {
+const amtCls = t.typ==='income'?'plus':'minus';
+const sign = t.typ==='income'?'+':'−';
+const kasaCls = t.kasa==='official'?'official':'unofficial';
+const kasaLbl = t.kasa==='official'?'OFICIÁLNÍ':'NEOFICIÁLNÍ';
+return `<div class="hitem ${t.typ}" onclick="openEditByIndex(${i})">
+<div class="hhd">
+<div class="hdate2">${t.date} ${t.time} · ${t.person}</div>
+<div class="hamt ${amtCls}">${sign}${fkc(t.amt)}</div>
+</div>
+<div class="hdet2">${t.cat} · <span class="txitem-kasa ${kasaCls}">${kasaLbl}</span></div>
+${t.note?`<div class="hnote2">${t.note}</div>`:''}
+</div>`;
+}).join('');
 }
 
 // STATS
 let statDays = 0;
 function openStats() { statDays=0; renderStats(); document.getElementById('screen-stats').classList.add('open'); }
 function setPeriod(days, btn) {
-  statDays=days;
-  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderStats();
+statDays=days;
+document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+btn.classList.add('on');
+renderStats();
 }
 
 function filterTx(days) {
-  const h = gh();
-  if (days===0) { const t=new Date();t.setHours(0,0,0,0);return h.filter(r=>new Date(r.ts)>=t); }
-  return h.filter(r=>new Date(r.ts)>=new Date(Date.now()-days*86400000));
+const h = gh();
+if (days===0) { const t=new Date();t.setHours(0,0,0,0);return h.filter(r=>new Date(r.ts)>=t); }
+return h.filter(r=>new Date(r.ts)>=new Date(Date.now()-days*86400000));
 }
 
 function renderStats() {
-  const h = filterTx(statDays);
-  const inc = h.filter(t=>t.typ==='income').reduce((s,t)=>s+t.amt,0);
-  const exp = h.filter(t=>t.typ==='expense').reduce((s,t)=>s+t.amt,0);
-  const offInc = h.filter(t=>t.typ==='income'&&t.kasa!=='unofficial').reduce((s,t)=>s+t.amt,0);
-  const unoffInc = h.filter(t=>t.typ==='income'&&t.kasa==='unofficial').reduce((s,t)=>s+t.amt,0);
-  const offExp = h.filter(t=>t.typ==='expense'&&t.kasa==='official').reduce((s,t)=>s+t.amt,0);
-  const unoffExp = h.filter(t=>t.typ==='expense'&&t.kasa==='unofficial').reduce((s,t)=>s+t.amt,0);
+const h = filterTx(statDays);
+const inc = h.filter(t=>t.typ==='income').reduce((s,t)=>s+t.amt,0);
+const exp = h.filter(t=>t.typ==='expense').reduce((s,t)=>s+t.amt,0);
+const offInc = h.filter(t=>t.typ==='income'&&t.kasa!=='unofficial').reduce((s,t)=>s+t.amt,0);
+const unoffInc = h.filter(t=>t.typ==='income'&&t.kasa==='unofficial').reduce((s,t)=>s+t.amt,0);
+const offExp = h.filter(t=>t.typ==='expense'&&t.kasa==='official').reduce((s,t)=>s+t.amt,0);
+const unoffExp = h.filter(t=>t.typ==='expense'&&t.kasa==='unofficial').reduce((s,t)=>s+t.amt,0);
 
-  document.getElementById('scards').innerHTML = `
-    <div class="sc wide">
-      <div class="sclbl">Celkové saldo</div>
-      <div class="scval" style="color:${inc-exp>=0?'var(--green)':'var(--red)'}">${fkc(inc-exp)}</div>
-      <div class="scsub">Příjmy: ${fkc(inc)} / Výdaje: ${fkc(exp)}</div>
-    </div>
-    <div class="sc" style="background:var(--official-bg);border-color:var(--official-dim)">
-      <div class="sclbl" style="color:var(--official)">🔵 Příjmy ofiko</div>
-      <div class="scval" style="color:var(--official)">${fkc(offInc)}</div>
-      <div class="scsub">výdaje ofiko: ${fkc(offExp)}</div>
-    </div>
-    <div class="sc" style="background:var(--unofficial-bg);border-color:var(--unofficial-dim)">
-      <div class="sclbl" style="color:var(--unofficial)">🔴 Příjmy neofiko</div>
-      <div class="scval" style="color:var(--unofficial)">${fkc(unoffInc)}</div>
-      <div class="scsub">výdaje neofiko: ${fkc(unoffExp)}</div>
-    </div>`;
+document.getElementById('scards').innerHTML = `
+<div class="sc wide">
+<div class="sclbl">Celkové saldo</div>
+<div class="scval" style="color:${inc-exp>=0?'var(--green)':'var(--red)'}">${fkc(inc-exp)}</div>
+<div class="scsub">Příjmy: ${fkc(inc)} / Výdaje: ${fkc(exp)}</div>
+</div>
+<div class="sc" style="background:var(--official-bg);border-color:var(--official-dim)">
+<div class="sclbl" style="color:var(--official)">🔵 Příjmy ofiko</div>
+<div class="scval" style="color:var(--official)">${fkc(offInc)}</div>
+<div class="scsub">výdaje ofiko: ${fkc(offExp)}</div>
+</div>
+<div class="sc" style="background:var(--unofficial-bg);border-color:var(--unofficial-dim)">
+<div class="sclbl" style="color:var(--unofficial)">🔴 Příjmy neofiko</div>
+<div class="scval" style="color:var(--unofficial)">${fkc(unoffInc)}</div>
+<div class="scsub">výdaje neofiko: ${fkc(unoffExp)}</div>
+</div>`;
 }
 
 function toast(msg) {
-  const t = document.getElementById('toast'); t.textContent=msg;
-  t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),2600);
+const t = document.getElementById('toast'); t.textContent=msg;
+t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),2600);
 }
 
 window.setTyp = setTyp; window.setKasa = setKasa; window.setCat = setCat; window.validateForm = validateForm;
@@ -831,6 +922,7 @@ window.setEPerson = setEPerson; window.setECat = setECat; window.validateEditFor
 window.saveEditTx = saveEditTx; window.deleteEditTx = deleteEditTx;
 window.openHistory = openHistory; window.closeScreen = closeScreen;
 window.openStats = openStats; window.setPeriod = setPeriod;
+window.openVykupy = openVykupy;
 
 refreshAll();
 </script>
