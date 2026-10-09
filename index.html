@@ -548,7 +548,21 @@ signOut(auth);
 };
 
 onAuthStateChanged(auth, (user) => {
-if (user) {
+if (user && !PERSON_BY_EMAIL[user.email]) {
+// Přihlášený účet není na seznamu (Pokladna je jen pro Lukáše a Ondru) — data se vůbec
+// nenačítají. Záměrně NEvoláme signOut: přihlášení je sdílené s ostatními appkami
+// (instance "auth"), takže odhlášení tady by vyhodilo třeba účetní z Třídicího protokolu.
+window._currentPerson = null;
+window._txData = null;
+window._vykupyData = null;
+if (unsubscribeTx) { unsubscribeTx(); unsubscribeTx = null; }
+if (unsubscribeVykupy) { unsubscribeVykupy(); unsubscribeVykupy = null; }
+document.getElementById('app-root').style.display = 'none';
+document.getElementById('login-screen').classList.add('open');
+const deniedEl = document.getElementById('login-err');
+deniedEl.textContent = 'Tenhle účet (' + user.email + ') nemá do Pokladny přístup. Přihlas se jiným účtem, nebo se ozvi Lukášovi.';
+deniedEl.style.display = 'block';
+} else if (user) {
 window._currentPerson = PERSON_BY_EMAIL[user.email] || user.email;
 document.getElementById('login-screen').classList.remove('open');
 document.getElementById('app-root').style.display = '';
